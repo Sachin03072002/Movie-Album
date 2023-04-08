@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+}
+
+.card {
+  cursor: pointer;
+  height: 23rem;
+  background-color: rgb(255, 13, 0);
+}
+.card:hover {
+  scale: 1.1;
+  transition: 0.2s ease-in-out all;
+}
