@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import UpdateForm from './UpdateForm';
 
 const Index = () => {
@@ -8,97 +8,106 @@ const Index = () => {
         fetch('https://jsonplaceholder.typicode.com/albums')
             .then((response) => response.json())
             .then((json) => {
-                // console.log(json)
                 setData(json);
-            })
+            });
+    };
 
-    }
     useEffect(() => {
         fetchAllAlbums();
     }, []);
+
     const fetchUpdateAlbum = (albumData) => {
         fetch('https://jsonplaceholder.typicode.com/albums', {
             method: 'POST',
             body: JSON.stringify(albumData),
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
             },
-
         })
             .then((response) => response.json())
             .then((json) => {
-                console.log(json)
                 setData([json, ...data]);
-            })
-        console.log("data updated");
-        // fetchAllAlbums();
-    }
+            });
+    };
+
     const addNewAlbum = () => {
         const albumData = {
-            title: "new data",
+            title: 'new data',
             userId: 1,
-        }
+        };
         fetchUpdateAlbum(albumData);
-    }
-    const handleNewAlbumUpdate = (albumData) => {
-        addNewAlbum(albumData);
-    }
+    };
+
+    const handleNewAlbumUpdate = () => {
+        addNewAlbum();
+    };
+
     const handleDeleteAlbumUpdate = (id) => {
-        fetch('https://jsonplaceholder.typicode.com/albums', {
-            method: 'delete'
+        fetch(`https://jsonplaceholder.typicode.com/albums/${id}`, {
+            method: 'DELETE',
         }).then(() => {
             setData(data.filter((item) => item.id !== id));
         });
-        console.log('data deleted');
-    }
+    };
+
     const updatedAlbumData = () => {
         const albumData = {
-            title: "new data",
+            title: 'new data',
             userId: 1,
-        }
-        // fetchUpdateAlbum(albumData);
-    }
+        };
+        fetchUpdateAlbum(albumData);
+    };
+
     const updateAlbum = (albumId) => {
         fetch(`https://jsonplaceholder.typicode.com/albums/${albumId}`, {
             method: 'PUT',
             body: JSON.stringify(updatedAlbumData),
             headers: {
-                'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+            },
         })
-            .then(response => response.json())
-            .then(updatedAlbum => {
-                setData(data.map(album => {
-                    if (album.id === updatedAlbum.id) {
-                        return updatedAlbum;
-                    } else {
-                        return album;
-                    }
-                }))
-            })
-    }
+            .then((response) => response.json())
+            .then((updatedAlbum) => {
+                setData(
+                    data.map((album) => {
+                        if (album.id === updatedAlbum.id) {
+                            return updatedAlbum;
+                        } else {
+                            return album;
+                        }
+                    })
+                );
+            });
+    };
 
     return (
         <div>
             <ul>
                 <button onClick={handleNewAlbumUpdate}>add</button>
                 {data.map((item) => (
-                    <div className="card d-inline-flex p-2 m-4 shadow p-3 mb-5 bg-body-tertiary rounded bg-info-subtle" style={{ width: '18rem' }} key={item.id}>
-                        <img src="https://www.filmmusicsite.com/images/covers/large/3130.jpg" className="card-img-top" alt="..." />
-                        <div className="card-body">
-                            <p className="card-text">{item.title}</p>
+                    <div
+                        className='card d-inline-flex p-2 m-4 shadow p-3 mb-5 bg-body-tertiary rounded bg-info-subtle'
+                        style={{ width: '18rem' }}
+                        key={item.id}
+                    >
+                        <img
+                            src='https://www.filmmusicsite.com/images/covers/large/3130.jpg'
+                            className='card-img-top'
+                            alt='...'
+                        />
+                        <div className='card-body'>
+                            <p className='card-text'>{item.title}</p>
                         </div>
-                        <button onClick={() => handleDeleteAlbumUpdate(item.id)}><i className="fa-solid fa-trash fa-shake"></i></button>
-                        <UpdateForm updateAlbum={updateAlbum} id={item.id} />
+                        <button onClick={() => handleDeleteAlbumUpdate(item.id)}>
+                            <i className='fa-solid fa-trash fa-shake'></i>
+                        </button>
+                        <UpdateForm updateAlbum={updateAlbum} id={item.id} itemtitle={item.title} />
                     </div>
-
-
                 ))}
             </ul>
-
-
+            {/* <UpdateForm updateAlbum={updateAlbum} id={null} /> */}
         </div>
-    )
-}
+    );
+};
 
 export default Index;

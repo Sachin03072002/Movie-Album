@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 
 function UpdateForm(props) {
-    const { id, updateAlbum } = props;
-    const [title, setTitle] = useState('');
+    const { id, updateAlbum, itemtitle } = props;
+    const [title, setTitle] = useState(itemtitle);
+    //handle button under that set visible true or call function
 
     return (
         <div>
