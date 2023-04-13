@@ -4,10 +4,20 @@
 
 .card {
   cursor: pointer;
-  height: 23rem;
+  height: 30rem;
+  width: 18rem;
   background-color: rgb(255, 13, 0);
 }
 .card:hover {
-  scale: 1.1;
+  scale: 1.03;
   transition: 0.2s ease-in-out all;
+}
+#addButton {
+  position: fixed;
+  top: 80%;
+  left: 91%;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+  font-size: 3rem;
 }

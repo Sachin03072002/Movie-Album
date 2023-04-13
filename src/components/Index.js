@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import UpdateForm from './UpdateForm';
 import AddMovie from './AddMovie';
 
+
 const Index = () => {
     const [data, setData] = useState([]);
 
@@ -71,13 +72,12 @@ const Index = () => {
     return (
         <div>
             <ul>
-                <button>
+                <div>
                     <AddMovie addNewAlbum={addNewAlbum} />
-                </button>
+                </div>
                 {data.map((item) => (
                     <div
                         className='card d-inline-flex p-2 m-4 shadow p-3 mb-5 bg-body-tertiary rounded bg-info-subtle'
-                        style={{ width: '18rem', height: '30rem' }}
                         key={item.id}
                     >
                         <img
@@ -89,7 +89,7 @@ const Index = () => {
                             <p className='card-text'>{item.title}</p>
                         </div>
                         <button onClick={() => handleDeleteAlbumUpdate(item.id)}>
-                            <i className='fa-solid fa-trash fa-shake'></i>
+                            <i id="deleteicon" className='fa-solid fa-trash'></i>
                         </button>
                         <div key={item.id}>
                             <UpdateForm updateAlbum={updateAlbum} item={item} id={item.id} />

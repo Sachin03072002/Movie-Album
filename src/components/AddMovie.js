@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 function AddMovie({ addNewAlbum }) {
+
     const [newAlbumTitle, setNewAlbumTitle] = useState('');
 
     const handleInputChange = (event) => {
@@ -13,7 +14,12 @@ function AddMovie({ addNewAlbum }) {
         addNewAlbum(newAlbumTitle);
         setNewAlbumTitle('');
     };
-
+    const handleMouseIn = () => {
+        document.getElementById("icon").classList.add("fa-bounce");
+    }
+    const handleMouseOut = () => {
+        document.getElementById("icon").classList.remove("fa-bounce");
+    }
     return (
         <div>
             <button
@@ -21,8 +27,11 @@ function AddMovie({ addNewAlbum }) {
                 className="btn btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop"
+                id="addButton"
+                onMouseEnter={handleMouseIn}
+                onMouseLeave={handleMouseOut}
             >
-                <i className="fa-solid fa-plus fa-bounce"></i>
+                <i id="icon" className="fa-solid fa-plus"></i>
             </button>
             <div
                 className="modal fade"
