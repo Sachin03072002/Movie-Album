@@ -4,6 +4,7 @@ function UpdateForm(props) {
     const { item, updateAlbum, id } = props;
     const [newAlbumTitle, setNewAlbumTitle] = useState('');
 
+    // console.log(item.id);
     useEffect(() => {
         setNewAlbumTitle(item.title);
     }, [item]);
@@ -11,17 +12,20 @@ function UpdateForm(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         updateAlbum(id, { title: newAlbumTitle }, item);
+        // console.log(id, newAlbumTitle, item);
     };
-
+    // console.log(item);
     const handleInputChange = (e) => {
         setNewAlbumTitle(e.target.value);
     };
+
+
     return (
         <div>
-            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#staticBackdrop${id}`}>
                 <i className="fa-solid fa-pen-nib"></i>
             </button>
-            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal fade" id={`staticBackdrop${id}`} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -37,7 +41,7 @@ function UpdateForm(props) {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" className="btn btn-primary">Save Changes</button>
+                                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
                             </div>
                         </form>
                     </div>

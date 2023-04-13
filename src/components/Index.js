@@ -50,16 +50,10 @@ const Index = () => {
         });
     };
 
-    const updatedAlbumData = () => {
-        const albumData = {
-            title: 'new data',
-            userId: 1,
-        };
-        fetchUpdateAlbum(albumData);
-    };
     const updateAlbum = (albumId, albumData, item) => {
-        console.log('previous:', item);
-        console.log('updated:', albumData);
+        // console.log('previous:', item);
+        // console.log('updated:', albumData);
+        console.log('id', albumId);
         fetch(`https://jsonplaceholder.typicode.com/albums/${albumId}`, {
             method: 'PUT',
             body: JSON.stringify(albumData),
@@ -71,6 +65,7 @@ const Index = () => {
             .then((updatedAlbum) => {
                 // Update the state with the updated album
                 setData(data.map((album) => album.id === albumId ? updatedAlbum : album));
+                console.log(updatedAlbum);
             })
             .catch((error) => {
                 console.error('Error updating album:', error);
@@ -99,7 +94,9 @@ const Index = () => {
                         <button onClick={() => handleDeleteAlbumUpdate(item.id)}>
                             <i className='fa-solid fa-trash fa-shake'></i>
                         </button>
-                        <UpdateForm updateAlbum={updateAlbum} id={item.id} itemtitle={item.title} item={item} />
+                        <div key={item.id}>
+                            <UpdateForm updateAlbum={updateAlbum} item={item} id={item.id} />
+                        </div>
                     </div>
                 ))}
             </ul>

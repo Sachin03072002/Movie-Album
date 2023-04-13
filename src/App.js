@@ -9,12 +9,6 @@ function App() {
       <Navbar />
       <div className="container-fluid bg-primary-subtle mt-5 pb-1">
         <Index />
-        {/* <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about/:id" element={<UpdateForm updateAlbum={Index.updateAlbum} />} />
-          </Routes>
-        </BrowserRouter> */}
       </div>
     </>
   );
