@@ -1,19 +1,20 @@
-import './App.css';
-import Index from './components/Index';
+// import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Index from './components/Index';
+// import UpdateForm from './components/UpdateForm';
 
 function App() {
   return (
     <>
       <Navbar />
-      {/* <Button /> */}
       <div className="container-fluid bg-primary-subtle mt-5 pb-1">
-        <BrowserRouter>
+        <Index />
+        {/* <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/about/:id" element={<UpdateForm updateAlbum={Index.updateAlbum} />} />
           </Routes>
-        </BrowserRouter>
+        </BrowserRouter> */}
       </div>
     </>
   );
