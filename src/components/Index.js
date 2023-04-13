@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import UpdateForm from './UpdateForm';
+import AddMovie from './AddMovie';
 
 const Index = () => {
     const [data, setData] = useState([]);
@@ -30,16 +31,13 @@ const Index = () => {
             });
     };
 
-    const addNewAlbum = () => {
+
+    const addNewAlbum = (title, userId) => {
         const albumData = {
-            title: 'new data',
-            userId: 1,
+            title,
+            userId,
         };
         fetchUpdateAlbum(albumData);
-    };
-
-    const handleNewAlbumUpdate = () => {
-        addNewAlbum();
     };
 
     const handleDeleteAlbumUpdate = (id) => {
@@ -51,9 +49,6 @@ const Index = () => {
     };
 
     const updateAlbum = (albumId, albumData, item) => {
-        // console.log('previous:', item);
-        // console.log('updated:', albumData);
-        console.log('id', albumId);
         fetch(`https://jsonplaceholder.typicode.com/albums/${albumId}`, {
             method: 'PUT',
             body: JSON.stringify(albumData),
@@ -76,11 +71,13 @@ const Index = () => {
     return (
         <div>
             <ul>
-                <button onClick={handleNewAlbumUpdate}>add</button>
+                <button>
+                    <AddMovie addNewAlbum={addNewAlbum} />
+                </button>
                 {data.map((item) => (
                     <div
                         className='card d-inline-flex p-2 m-4 shadow p-3 mb-5 bg-body-tertiary rounded bg-info-subtle'
-                        style={{ width: '18rem' }}
+                        style={{ width: '18rem', height: '30rem' }}
                         key={item.id}
                     >
                         <img
