@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import UpdateForm from './UpdateForm';
 import AddMovie from './AddMovie';
+import Loader from './Loader';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 
 const Index = () => {
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [dataFetched, setDataFetched] = useState(false);
 
     const fetchAllAlbums = async () => {
-        fetch('https://jsonplaceholder.typicode.com/albums')
-            .then((response) => response.json())
-            .then((json) => {
-                setData(json);
-            });
+        setLoading(true);
+        try {
+            const response = await fetch('https://jsonplaceholder.typicode.com/albums');
+            const json = await response.json();
+            setData(json);
+        } catch (error) {
+            console.error('Error fetching albums:', error);
+        }
+        setLoading(false);
+        setDataFetched(true);
     };
+
 
     useEffect(() => {
         fetchAllAlbums();
@@ -29,6 +40,9 @@ const Index = () => {
             .then((response) => response.json())
             .then((json) => {
                 setData([json, ...data]);
+                setTimeout(() => {
+                    NotificationManager.success('Album added successfully', 'Success');
+                }, 1000);
             });
     };
 
@@ -46,6 +60,9 @@ const Index = () => {
             method: 'DELETE',
         }).then(() => {
             setData(data.filter((item) => item.id !== id));
+            setTimeout(() => {
+                NotificationManager.success('Album deleted successfully', 'Success');
+            }, 1000);
         });
     };
 
@@ -67,15 +84,23 @@ const Index = () => {
                 console.error('Error updating album:', error);
             });
     };
+    const handleMouseIn = (id) => {
+        document.getElementById(`deleteicon${id}`).classList.add("fa-bounce");
+    };
 
+    const handleMouseOut = (id) => {
+        document.getElementById(`deleteicon${id}`).classList.remove("fa-bounce");
+    };
 
     return (
         <div>
+            <NotificationContainer />
             <ul>
                 <div>
                     <AddMovie addNewAlbum={addNewAlbum} />
                 </div>
-                {data.map((item) => (
+                {loading && !dataFetched && <Loader />}
+                {!loading && data.map((item) => (
                     <div
                         className='card d-inline-flex p-2 m-4 shadow p-3 mb-5 bg-body-tertiary rounded bg-info-subtle'
                         key={item.id}
@@ -88,11 +113,19 @@ const Index = () => {
                         <div className='card-body'>
                             <p className='card-text'>{item.title}</p>
                         </div>
-                        <button onClick={() => handleDeleteAlbumUpdate(item.id)}>
-                            <i id="deleteicon" className='fa-solid fa-trash'></i>
-                        </button>
-                        <div key={item.id}>
-                            <UpdateForm updateAlbum={updateAlbum} item={item} id={item.id} />
+                        <div className="button-container">
+                            <button className='btn btn-' id="delete" style={{
+                                'width': '40px',
+                                'height': '38px',
+                                'marginRight': '4px'
+                            }} onMouseEnter={() => handleMouseIn(item.id)}
+                                onMouseLeave={() => handleMouseOut(item.id)} onClick={() => handleDeleteAlbumUpdate(item.id)}>
+                                <i id={`deleteicon${item.id}`} className='fa-solid fa-trash'></i>
+                            </button>
+                            <br />
+                            <div key={item.id}>
+                                <UpdateForm updateAlbum={updateAlbum} item={item} id={item.id} />
+                            </div>
                         </div>
                     </div>
                 ))}
