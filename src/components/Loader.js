@@ -1,5 +1,5 @@
 import React from 'react'
-
+// this is the loader component
 function Loader() {
     return (
         <div>

@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react'
-
+// this is the updateForm component
 function UpdateForm(props) {
+    //destructuring the props
     const { item, updateAlbum, id } = props;
+    //state for the new title
     const [newAlbumTitle, setNewAlbumTitle] = useState('');
 
     // console.log(item.id);
+    //when the new title got set
     useEffect(() => {
         setNewAlbumTitle(item.title);
     }, [item]);
-
+    //when the form is submitted the function runs
     const handleSubmit = (e) => {
         e.preventDefault();
+        //passing all the data with new title to the updatealbum function
         updateAlbum(id, { title: newAlbumTitle }, item);
         // console.log(id, newAlbumTitle, item);
     };
     // console.log(item);
+    //function to handdle the change in the input filed
     const handleInputChange = (e) => {
         setNewAlbumTitle(e.target.value);
     };
@@ -22,6 +27,7 @@ function UpdateForm(props) {
 
     return (
         <div>
+            {/* bootstrap component -alert is used */}
             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#staticBackdrop${id}`}>
                 <i className="fa-solid fa-pen-nib"></i>
             </button>

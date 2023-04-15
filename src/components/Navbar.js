@@ -1,6 +1,6 @@
 import React from 'react'
 
-
+// this is the navbar component
 function Navbar() {
     return (
         <div>
