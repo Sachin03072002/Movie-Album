@@ -39,7 +39,7 @@ function UpdateForm(props) {
             </Button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>UPDATE FORM</Modal.Title>
                 </Modal.Header>
                 <form onSubmit={handleSubmit}>
                     <div className="modal-body">
