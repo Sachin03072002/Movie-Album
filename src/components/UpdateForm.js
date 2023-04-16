@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
 // this is the updateForm component
 function UpdateForm(props) {
     //destructuring the props
@@ -23,38 +26,36 @@ function UpdateForm(props) {
     const handleInputChange = (e) => {
         setNewAlbumTitle(e.target.value);
     };
+    const [show, setShow] = useState(false);
 
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     return (
         <div>
             {/* bootstrap component -alert is used */}
-            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#staticBackdrop${id}`}>
+            <Button variant="primary" onClick={handleShow}>
                 <i className="fa-solid fa-pen-nib"></i>
-            </button>
-            <div className="modal fade" id={`staticBackdrop${id}`} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="staticBackdropLabel">Edit Album</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </Button>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <form onSubmit={handleSubmit}>
+                    <div className="modal-body">
+                        <div className="mb-3">
+                            <label htmlFor="title" className="form-label">Title</label>
+                            <input type="text" className="form-control" id="title" value={newAlbumTitle} onChange={handleInputChange} required />
                         </div>
-                        <form onSubmit={handleSubmit}>
-                            <div className="modal-body">
-                                <div className="mb-3">
-                                    <label htmlFor="title" className="form-label">Title</label>
-                                    <input type="text" className="form-control" id="title" value={newAlbumTitle} onChange={handleInputChange} required />
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
-                            </div>
-                        </form>
                     </div>
-                </div>
-            </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose}>Cancel</button>
+                        <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" onClick={handleClose}>Save Changes</button>
+                    </div>
+                </form>
+            </Modal>
         </div>
-    )
+    );
 }
 
 
